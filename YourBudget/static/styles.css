@@ -1,0 +1,32 @@
+/* Size for brand */
+nav .navbar-brand
+{
+    font-size: xx-large;
+    color: gold;
+    font-family: "Monaco";
+}
+nav .nav-link
+{
+    color: white;
+
+}
+nav .nav-link:hover
+{
+    color: gold;
+
+}
+.navbar
+{
+    background-color: black;
+}
+
+.btn
+{
+    background-color: gold;
+    color: black;
+}
+.navbar-toggler
+{
+    border: 3px solid white;
+    border-radius: 500px;
+}

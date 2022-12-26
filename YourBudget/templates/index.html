@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Main
+{% endblock %}
+
+{% block main %}
+<h2>Create new record:</h2>
+  <form action="/" method="post">
+    {% if error %}
+          <div class="container">
+              <div class="alert alert-warning" role="alert" >
+                  <p>{{error}}</p>
+              </div>
+          </div>
+    {% endif %}
+  <div class="container bg-light p-3">
+    <div class="input-group mb-3">
+      <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="name" name="name" placeholder="Name of operation" type="text">
+      <input type = "date" name="date" value="{{today_date}}">
+      <button class="btn btn-primary" type="submit">Submit record to budget</button>
+    </div>
+
+
+
+    <div class="input-group mb-3">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0" checked="checked">
+        <label class="form-check-label" for="inlineRadio1">Spending</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1">
+        <label class="form-check-label" for="inlineRadio2">Income</label>
+      </div>
+      <span class="input-group-text">Choose category:</span>
+      <select class="form-select" aria-label="Default select example" name="c_select">
+        {% for category in categories %}
+        <option value="{{category.category_type}}">{{category.category_type}}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+
+    <div class="input-group mb-3">
+      <span class="input-group-text">Value:</span>
+      <input type="text" aria-label="Value" class="form-control" name="value" placeholder="enter value" >
+      <span class="input-group-text">Quantity:</span>
+      <input type="text" aria-label="Quantity" class="form-control" name="quantity" value="1">
+      <span class="input-group-text">External link:</span>
+      <input type="text" aria-label="Quantity" class="form-control" name="external_link" placeholder="(optional) provide url link">
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text">Notes:</span>
+      <textarea class="form-control" aria-label="With textarea" name="text" placeholder="(optional)"></textarea>
+    </div>
+  </div>
+</form>
+{% endblock %}
+

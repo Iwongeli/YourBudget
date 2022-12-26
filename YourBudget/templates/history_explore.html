@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History Explore
+{% endblock %}
+
+{% block main %}
+{% if data %}
+
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{data['title']}}</h5>
+      <br>
+      <h6 class="card-subtitle mb-3 text-muted">Category: {{data['category_type']}}</h6>
+      <h6 class="card-subtitle mb-3">Total record value: {{data['total']}}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">~{{data['operation_type']}}~</h6>
+      <div class="container">
+        <br>
+        <div class="row">
+          <div class="col">
+            <b>Vaule: {{data['value']}}</b>
+          </div>
+          <div class="col order-5">
+            <b>Operation date: {{data['operation_date']}}</b>
+          </div>
+          <div class="col order-1">
+            <b>Quantity: {{data['quantity']}}</b>
+          </div>
+        </div>
+      </div>
+      <br>
+      <h6 class="card-subtitle mb-2 text-muted">Note:</h6>
+      <p class="card-text">{{data['note']}}</p>
+      {% if link %}
+        <a href="{{data['external_link']}}" class="card-link" target="_blank">External link</a>
+        {% endif %}
+      </div>
+  </div>
+{% endif %}
+{% endblock %}

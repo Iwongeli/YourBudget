@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+<form action="/history" method="post">
+    <div class="container">
+
+        <div class="input-group mb-3">
+            <select class="form-select" aria-label="Default select example" name="c_select">
+                    <option>ANY</option>
+                {% for category in categories %}
+                    <option value="{{category.category_type}}">{{category.category_type}}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-primary" type="submit">Filter records</button>
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">From:</span>
+            <input class="p-3" type = "date" name="date_from" value="{{date_from}}">
+            <span class="input-group-text">To:</span>
+            <input class="p-3" type = "date" name="date_to" value="{{date_to}}">
+        </div>
+    </div>
+</form>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Operation type</th>
+                <th>Total value</th>
+                <th>Date</th>
+                <th>Explore</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <th id="{{record.id}}">{{record.title}}</td>
+                <td><span class="badge bg-secondary">{{record.category_type}}</span></h1></td>
+                <td><span class="badge bg-secondary">{{record.operation_type}}</span></h1></td>
+                <th >{{record.total}}</th>
+                <td>{{record.operation_date}}</td>
+                <td><form action="{{ url_for('history_explore', id=record.operation_id) }}" method=post>
+                    <input class="btn btn-primary" type="submit" value="Explore Further"></form></td>
+                <td><form action="{{ url_for('history_delete', id=record.operation_id) }}" method=post>
+                    <input class="btn btn-primary" type="submit" value="Delete"></form></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

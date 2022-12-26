@@ -1,0 +1,42 @@
+cs50
+Flask
+Flask-Session
+requests
+
+.schema
+CREATE TABLE sqlite_sequence(name,seq);
+
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    username TEXT NOT NULL,
+    hash TEXT NOT NULL
+    );
+
+CREATE UNIQUE INDEX username ON users (username);
+
+CREATE TABLE operations (
+                operation_user INTEGER NOT NULL,
+                operation_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                title TEXT NOT NULL,
+                value NUMERIC NOT NULL,
+                quantity NUMERIC NOT NULL,
+                total NUMERIC NOT NULL,
+                category_id INTEGER NOT NULL,
+                operation_type INTEGER NOT NULL,
+                operation_date DATE,
+                note TEXT,
+                external_link TEXT,
+                FOREIGN KEY (operation_user) REFERENCES users(id)
+                );
+
+CREATE TABLE categories (
+                users_id INTEGER NOT NULL,
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                category_type TEXT NOT NULL,
+                category_value NUMERIC DEFAULT 0,
+                FOREIGN KEY (users_id) REFERENCES users(id)
+                );
+
+SELECT SUM(total), category_type FROM categories
+INNER JOIN operations ON categories.id = operations.category_id
+WHERE operation_user=8 AND operation_type=1

@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+
+
+
+    <form action="/register" method="post">
+        {% if error %}
+        <div class="container">
+            <div class="alert alert-warning" role="alert" >
+                <p>{{error}}</p>
+            </div>
+        </div>
+        {% endif %}
+        <div class="mb-3">
+            <p>Enetr your username:</p>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+        </div>
+        <br>
+        <div class="mb-3">
+            <p>Enetr your password:</p>
+            <p style="font-size:11px; color:gray ">Password should contain 6 characters.</p>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <p>Confirm your password:</p>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="Confirm password" type="password">
+        </div>
+
+        <button class="btn btn-primary" type="submit" id="liveAlertBtn">Register</button>
+    </form>
+{% endblock %}

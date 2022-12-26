@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Categories
+{% endblock %}
+
+{% block main %}
+    <form action="/categories" method="post">
+
+        <div class="mb-3">
+            <h2>Create new category:</h2>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="category_name" name="category_name" placeholder="Category name" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+    <br>
+        <div class="container">
+            <h2>Your categories:</h2>
+            <table class="table table-striped">
+                <col style="width:70%">
+                <col style="width:30%">
+                <thead>
+                    <tr>
+                        <th>Name:</th>
+                        <th>Delete category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <th id="{{category.category_type}}">{{category.category_type}}</th>
+                        <th><form action="{{ url_for('categories_del', id=category.id) }}" method=post>
+                            <input class="btn btn-primary" type="submit" value="Delete"></form></th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock %}

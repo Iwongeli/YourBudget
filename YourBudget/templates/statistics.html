@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Statistics
+{% endblock %}
+
+{% block main %}
+
+<div class="container" ><h3>Budget statistics:</h3></div>
+<div class="d-flex justify-content-center p-3">
+
+    <br>
+    <form  action="/statistics" method="post">
+
+      <div class="input-group mb-3">
+        <button class="btn btn-primary p-3" type="submit">Filter</button>
+        <span class="input-group-text">From:</span>
+        <input class="p-3" type = "date" name="date_from">
+        <span class="input-group-text">To:</span>
+        <input class="p-3" type = "date" name="date_to">
+      </div>
+    </form>
+    <br>
+    <br>
+</div>
+<div class="input-group mb-3 d-flex justify-content-center">
+  <span class="input-group-text"><b>Balance:</b></span>
+  <span class="input-group-text">{{balance[0]}}</span>
+  <span class="input-group-text">Income:</span>
+  <span class="input-group-text">{{balance[1]}}</span>
+  <span class="input-group-text">Expeses:</span>
+  <span class="input-group-text">{{balance[2]}}</span>
+</div>
+<div class="row p-3">
+  <h3>Value of earnings and spendings:</h3>
+  <div class="col-sm-2 bg-light"></div>
+  <div class="col-sm-4 bg-light">
+    Expences
+    <canvas id="SpendingsChart"></canvas>
+    <script>
+        const ctx = document.getElementById('SpendingsChart');
+
+        new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: {{sp_labels_list | safe}},
+            datasets: [{
+              label: 'Total value',
+              data: {{sp_total_list | safe}},
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true
+          }
+        });
+      </script>
+  </div>
+  <div class="col-sm-4 bg-light">
+    Earnings
+    <canvas id="EarningsChart"></canvas>
+    <script>
+        const ctx2 = document.getElementById('EarningsChart');
+
+        new Chart(ctx2, {
+          type: 'pie',
+          data: {
+            labels: {{er_labels_list | safe}},
+            datasets: [{
+              label: 'Total value',
+              data: {{er_total_list | safe}},
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true
+          }
+        });
+      </script>
+  </div>
+  <div class="col-sm-2 bg-light">
+  </div>
+</div>
+
+<div class="row p-3">
+  <h3>Cumulative value of budget in time:</h3>
+  <div class="col-sm-2 bg-light"></div>
+  <div class="col bg-light"><canvas id="AcumulationChart"></canvas></div>
+  <div class="col-sm-2 bg-light"></div>
+
+  <script>
+      const ctx3 = document.getElementById('AcumulationChart');
+
+      new Chart(ctx3, {
+        type: 'line',
+        data: {
+          labels: {{ac_labels_list | safe}},
+          datasets: [{
+            label: 'Acumulative value',
+            data: {{ac_total_list | safe}},
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+    </script>
+  </div>
+</div>
+
+{% endblock %}
