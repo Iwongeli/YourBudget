@@ -1,4 +1,4 @@
-# YOUR PROJECT TITLE
+# YourBudget
 #### Video Demo:  https://youtu.be/QJAKA5YQmok
 #### Description:
 Your Budget is an app that supports you in creating budgets for your projects. During my participation in students organisations many times we face problem of creating budget for our project. I hope that this application will help in better structuring the budget for projects.
@@ -47,7 +47,7 @@ yourwallet.db
    -for app.py-
    about routes:
    
-        -register-
+     -register-
         GET render register.html
         POST takes provided username password and password confirmation then:
             -Checks if all data are provided at all.
