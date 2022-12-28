@@ -1,7 +1,6 @@
-import os
-
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask
+from flask import flash, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import date
@@ -58,7 +57,7 @@ def register():
             error = 'password is to short.'
             return render_template("register.html", error=error)
 
-        # Ensure password was submitted
+        # Ensure password and corfirmation are the same.
         elif not request.form.get("password") == request.form.get("confirmation"):
             error = 'passwords are different.'
             return render_template("register.html", error=error)
@@ -145,10 +144,18 @@ def index():
     categories = db.execute("SELECT category_type, id FROM categories WHERE users_id=? ORDER BY id", session["user_id"])
 
     if request.method == "POST":
+        print(request.form.get("c_select"))
+
+        if request.form.get("c_select") == None:
+            error = 'First declare category in "categories".'
+            return render_template("index.html", categories=categories, error=error, today_date=today_date)
+
+
         # Check if all necesery informations provided
         if not request.form.get("name") or not request.form.get("value") or not request.form.get("quantity") or not request.form.get("c_select") :
             error = 'Fill at least name value and quantity, select operation type and category.'
             return render_template("index.html", categories=categories, error=error, today_date=today_date)
+
 
         # Chceck if values are numbers
         try:
@@ -213,6 +220,7 @@ def categories():
 @login_required
 def categories_del(id):
     # Delete category with button
+    db.execute("DELETE FROM operations WHERE operation_user=? AND category_id=?", session["user_id"], id)
     db.execute("DELETE FROM categories WHERE users_id=? AND id=?", session["user_id"], id)
     try:
         categories = db.execute("SELECT category_type, id FROM categories WHERE users_id=? ORDER BY id", session["user_id"])
@@ -325,7 +333,7 @@ def history():
         return render_template("history.html", categories=categories, records=records, date_from=date_from, date_to=date_to)
 
     # list records join categories
-    records = db.execute("SELECT * FROM operations INNER JOIN categories ON operations.category_id = categories.id WHERE operation_user=? ORDER BY operation_date", session["user_id"])
+    records = db.execute("SELECT * FROM operations INNER JOIN categories ON operations.category_id = categories.id WHERE operation_user=? ORDER BY operation_date DESC", session["user_id"])
     for record in records:
         if record['operation_type'] == 0:
             record['operation_type'] = 'Expence'
@@ -339,7 +347,7 @@ def history():
 @login_required
 def history_delete(id):
     """delete transactions"""
-    # Remove value from categories
+    # Get dataset
     category = db.execute("SELECT category_id FROM operations WHERE operation_user=? AND operation_id=?", session["user_id"], id)[0]['category_id']
     operation_type = db.execute("SELECT operation_type FROM operations WHERE operation_user=? AND operation_id=?", session["user_id"], id)[0]['operation_type']
     total = db.execute("SELECT total FROM operations WHERE operation_user=? AND operation_id=?", session["user_id"], id)[0]['total']
