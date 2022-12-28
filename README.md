@@ -44,6 +44,7 @@ yourwallet.db
                         category as text,
                         category value
 
+for app.py
 about routes:
     -register-
         GET render register.html
