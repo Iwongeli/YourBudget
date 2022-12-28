@@ -44,9 +44,10 @@ yourwallet.db
                         category as text,
                         category value
 
-for app.py
-about routes:
-    -register-
+   -for app.py-
+   about routes:
+   
+        -register-
         GET render register.html
         POST takes provided username password and password confirmation then:
             -Checks if all data are provided at all.
